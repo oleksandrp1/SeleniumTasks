@@ -67,9 +67,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest2.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="InternetExplorer.cs" />
+    <Compile Include="Chrome.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FireFox.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,17 +1,16 @@
 ﻿using System;
+using System.Text;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.IE;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Safari;
 using OpenQA.Selenium.Support.UI;
+using NUnit.Framework;
 
-namespace Selenium
+namespace SeleniumTasksProject1._1
 {
     [TestFixture]
-    public class UnitTest1
+    public class Chrome
     {
         private IWebDriver driver;
         private WebDriverWait wait;
@@ -24,12 +23,13 @@ namespace Selenium
         }
 
         [Test]
-        public void OpenUrlTest()
+        public void LoginTestInChrome()
         {
-            driver.Url = "http://www.google.com";
-            driver.FindElement(By.Name("q")).SendKeys("webdriver");
-            driver.FindElement(By.Name("btnG")).Click();
-            wait.Until(ExpectedConditions.TitleIs("webdriver - Google Search"));
+            driver.Url = "http://localhost:8082/litecart/admin/";
+            driver.FindElement(By.Name("username")).SendKeys("admin");
+            driver.FindElement(By.Name("password")).SendKeys("admin");
+            driver.FindElement(By.Name("login")).Click();
+            //wait.Until(ExpectedConditions.TitleIs("My Store"));
         }
 
         [TearDown]

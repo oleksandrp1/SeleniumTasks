@@ -3,14 +3,14 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
 
 namespace SeleniumTasksProject1._1
 {
     [TestFixture]
-    public class UnitTest2
+    public class FireFox
     {
         private IWebDriver driver;
         private WebDriverWait wait;
@@ -18,12 +18,15 @@ namespace SeleniumTasksProject1._1
         [SetUp]
         public void start()
         {
-            driver = new ChromeDriver();
+            FirefoxOptions options = new FirefoxOptions();
+            options.BrowserExecutableLocation = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+            options.UseLegacyImplementation = false;
+            driver = new FirefoxDriver(options);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
         [Test]
-        public void LoginTest()
+        public void LoginTestInFirefox()
         {
             driver.Url = "http://localhost:8082/litecart/admin/";
             driver.FindElement(By.Name("username")).SendKeys("admin");
