@@ -18,21 +18,39 @@ namespace SeleniumTasksProject1._1
         [SetUp]
         public void start()
         {
-            FirefoxOptions options = new FirefoxOptions();
-            options.BrowserExecutableLocation = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+            /*FirefoxOptions options = new FirefoxOptions();
+            options.BrowserExecutableLocation = "C:\\Program Files\\Mozilla Firefox Nightly\\firefox.exe";
             options.UseLegacyImplementation = false;
-            driver = new FirefoxDriver(options);
+            driver = new FirefoxDriver(options);*/
+            driver = new FirefoxDriver();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
-        [Test]
-        public void LoginTestInFirefox()
+        public void LoginInFirefox()
         {
             driver.Url = "http://localhost:8082/litecart/admin/";
             driver.FindElement(By.Name("username")).SendKeys("admin");
             driver.FindElement(By.Name("password")).SendKeys("admin");
             driver.FindElement(By.Name("login")).Click();
             //wait.Until(ExpectedConditions.TitleIs("My Store"));
+        }
+
+        [Test]
+        public void OpenAllElements()
+        {
+            LoginInFirefox();
+            wait.Until(ExpectedConditions.TitleIs("Template | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("Logotype | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("Catalog | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("Product Groups | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("Option Groups | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("Manufactures | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("Suppliers | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("Delivery Statuses | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("Sold Out Statuses | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("Quantity Units | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("CSV Import/Export | My Store"));
+            wait.Until(ExpectedConditions.TitleIs("Countries | My Store"));
         }
 
         [TearDown]
