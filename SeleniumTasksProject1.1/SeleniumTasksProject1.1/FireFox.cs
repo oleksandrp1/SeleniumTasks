@@ -32,25 +32,35 @@ namespace SeleniumTasksProject1._1
             driver.FindElement(By.Name("username")).SendKeys("admin");
             driver.FindElement(By.Name("password")).SendKeys("admin");
             driver.FindElement(By.Name("login")).Click();
-            //wait.Until(ExpectedConditions.TitleIs("My Store"));
+            wait.Until(ExpectedConditions.ElementExists(By.CssSelector("div.notice.success")));
         }
 
         [Test]
         public void OpenAllElements()
         {
+            string titleOfMainMenu, titleOfSubMenu = null;
             LoginInFirefox();
-            wait.Until(ExpectedConditions.TitleIs("Template | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("Logotype | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("Catalog | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("Product Groups | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("Option Groups | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("Manufactures | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("Suppliers | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("Delivery Statuses | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("Sold Out Statuses | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("Quantity Units | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("CSV Import/Export | My Store"));
-            wait.Until(ExpectedConditions.TitleIs("Countries | My Store"));
+            var mainMenus = driver.FindElements(By.ClassName("name"));
+            for(int i=0; i< mainMenus.Count; i++)
+            {
+                titleOfMainMenu = mainMenus[i].Text;
+                mainMenus[i].Click();
+                wait.Until(ExpectedConditions.TitleIs(titleOfSubMenu + " | My Store"));
+                mainMenus = driver.FindElements(By.ClassName("name"));
+                var subMenus = mainMenus[i].FindElements(By.ClassName("name"));
+                if (subMenus.Count > 0)
+                {
+                    for (int a=0; a<subMenus.Count; a++)
+                    {
+                        titleOfSubMenu = subMenus[a].Text;
+                        subMenus[a].Click();
+                        wait.Until(ExpectedConditions.TitleIs(titleOfSubMenu + " | My Store"));
+                    }
+                }
+                //wait.Until(ExpectedConditions.TitleIs(title + " | My Store"));
+            }
+            
+            //wait.Until(ExpectedConditions.TitleIs("Template | My Store"));
         }
 
         [TearDown]
