@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -89,7 +89,58 @@ namespace SeleniumTasksProject1._1
                     Assert.IsTrue(countOfStickers == 1);
                 }
             }
+        }
 
+        [Test]
+        public void VerifySortingCountries()
+        {
+            IList<IWebElement> countries = null;
+            IList<IWebElement> countOfTimezones = null;
+            IList<IWebElement> timezones = null;
+            List<string> countryNames = null;
+            int countOfCountries = 0;
+            List<string> countriesWithTimezones = new List<string>();
+
+            LoginInChrome();
+            driver.Url = "http://localhost:8082/litecart/admin/?app=countries&doc=countries";
+            countries = driver.FindElements(By.XPath(".//*[@id='content']/form/table/tbody/tr/td[5]/a"));
+            countOfTimezones = driver.FindElements(By.XPath(".//*[@id='content']/form/table/tbody/tr/td[6]"));
+            countOfCountries = countries.Count;
+            countryNames = new List<string>(countOfCountries);
+
+            for (int i=0; i<countOfCountries; i++)
+            {
+                countryNames.Add(countries[i].GetAttribute("text"));
+                //countryNames.Add(countries[i].Text);
+                if (countOfTimezones[i].GetAttribute("textContent") != "0")
+                {
+                    countriesWithTimezones.Add(countries[i].GetAttribute("text"));
+                }
+            }
+
+            countryNames.Sort();
+
+            //check order of countries
+            for (int i = 0; i < countOfCountries; i++)
+            {
+                countryNames[i].CompareTo(countries[i].Text);
+            }
+
+            //check order of time zones
+            foreach(string a in countriesWithTimezones)
+            {
+                driver.FindElement(By.LinkText(a)).Click();
+                timezones = driver.FindElements(By.);
+                driver.Url = "http://localhost:8082/litecart/admin/?app=countries&doc=countries";
+            }
+        }
+
+        [Test]
+        public void VerifySortingTimezones()
+        {
+            IList<IWebElement> countries = null;
+            IList<IWebElement> timezones = null;
+            int countOfTimezones = 0;
         }
 
         [TearDown]
