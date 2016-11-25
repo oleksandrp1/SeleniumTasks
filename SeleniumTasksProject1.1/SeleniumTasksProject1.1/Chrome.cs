@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -62,6 +61,35 @@ namespace SeleniumTasksProject1._1
                     //wait.Until(ExpectedConditions.TitleIs(titleOfSubMenu + " | My Store"));
                 }
             }
+        }
+
+        [Test]
+        public void VerifyStickersInChrome()
+        {
+            IList<IWebElement> categories = null;
+            IList<IWebElement> products = null;
+            IList<IWebElement> stickers = null;
+            int countOfCategories = 0;
+            int countOfProducts = 0;
+            int countOfStickers = 0;
+
+            driver.Url = "http://localhost:8082/litecart/en/";
+            wait.Until(ExpectedConditions.TitleIs("Online Store | My Store"));
+
+            categories = driver.FindElements(By.CssSelector("ul.listing-wrapper.products"));
+            countOfCategories = categories.Count;
+            for (int i = 0; i < countOfCategories; i++)
+            {
+                products = categories[i].FindElements(By.CssSelector("li[class*='product']"));
+                countOfProducts = products.Count;
+                for (int a=0; a<countOfProducts; a++)
+                {
+                    stickers = products[a].FindElements(By.CssSelector("div.sticker"));
+                    countOfStickers = stickers.Count;
+                    Assert.IsTrue(countOfStickers == 1);
+                }
+            }
+
         }
 
         [TearDown]
