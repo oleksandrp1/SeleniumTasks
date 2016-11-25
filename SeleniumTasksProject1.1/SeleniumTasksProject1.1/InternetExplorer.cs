@@ -26,6 +26,10 @@ namespace SeleniumTasksProject1._1
         public void LoginTestInInternetExplorer()
         {
             driver.Url = "http://localhost:8082/litecart/admin/";
+            driver.FindElement(By.Name("username")).SendKeys("admin");
+            driver.FindElement(By.Name("password")).SendKeys("admin");
+            driver.FindElement(By.Name("login")).Click();
+            //wait.Until(ExpectedConditions.TitleIs("My Store"));
         }
 
         [TearDown]
