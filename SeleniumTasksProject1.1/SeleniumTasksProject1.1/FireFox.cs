@@ -36,31 +36,36 @@ namespace SeleniumTasksProject1._1
         }
 
         [Test]
-        public void OpenAllElements()
+        public void OpenAllElementsInFirefox()
         {
-            string titleOfMainMenu, titleOfSubMenu = null;
+            string titleOfMainMenu = null;
+            string titleOfSubMenu = null;
+            IList<IWebElement> mainMenus = null;
+            IList<IWebElement> subMenus = null;
+            int counfOfMainMenus = 0;
+            int counfOfSubMenus = 0;
+
             LoginInFirefox();
-            var mainMenus = driver.FindElements(By.ClassName("name"));
-            for(int i=0; i< mainMenus.Count; i++)
+            mainMenus = driver.FindElements(By.Id("app-"));
+            counfOfMainMenus = mainMenus.Count;
+            for(int i=0; i< counfOfMainMenus; i++)
             {
+                mainMenus = driver.FindElements(By.Id("app-"));
                 titleOfMainMenu = mainMenus[i].Text;
                 mainMenus[i].Click();
-                wait.Until(ExpectedConditions.TitleIs(titleOfSubMenu + " | My Store"));
-                mainMenus = driver.FindElements(By.ClassName("name"));
-                var subMenus = mainMenus[i].FindElements(By.ClassName("name"));
-                if (subMenus.Count > 0)
+                wait.Until(ExpectedConditions.ElementExists(By.TagName("h1")));
+                mainMenus = driver.FindElements(By.Id("app-"));
+                counfOfSubMenus = mainMenus[i].FindElements(By.CssSelector("li[id*='doc-']")).Count;
+                for (int a = 0; a < counfOfSubMenus; a++)
                 {
-                    for (int a=0; a<subMenus.Count; a++)
-                    {
-                        titleOfSubMenu = subMenus[a].Text;
-                        subMenus[a].Click();
-                        wait.Until(ExpectedConditions.TitleIs(titleOfSubMenu + " | My Store"));
-                    }
+                    mainMenus = driver.FindElements(By.Id("app-"));
+                    subMenus = mainMenus[i].FindElements(By.CssSelector("li[id*='doc-']"));
+                    titleOfSubMenu = subMenus[a].Text;
+                    subMenus[a].Click();
+                    wait.Until(ExpectedConditions.ElementExists(By.TagName("h1")));
+                    //wait.Until(ExpectedConditions.TitleIs(titleOfSubMenu + " | My Store"));
                 }
-                //wait.Until(ExpectedConditions.TitleIs(title + " | My Store"));
             }
-            
-            //wait.Until(ExpectedConditions.TitleIs("Template | My Store"));
         }
 
         [TearDown]
