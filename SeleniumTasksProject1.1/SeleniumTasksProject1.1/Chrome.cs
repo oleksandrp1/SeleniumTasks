@@ -189,6 +189,14 @@ namespace SeleniumTasksProject1._1
             }
         }
 
+        [Test]
+        public void VerifyGoodsPages()
+        {
+            driver.Url = "http://localhost:8082/litecart/en/";
+            wait.Until(ExpectedConditions.TitleIs("Online Store | My Store"));
+
+        }
+
         [TearDown]
         public void stop()
         {
