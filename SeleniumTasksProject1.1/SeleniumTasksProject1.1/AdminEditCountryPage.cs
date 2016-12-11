@@ -28,7 +28,7 @@ namespace SeleniumTasksProject1._1
                 timezoneNames[i].CompareTo(timezones[i].GetAttribute("textContent"));
             }
 
-            general.GoToPage(driver, "http://localhost/litecart/admin/?app=countries&doc=countries", wait, "Countires");
+            general.GoToPage(driver, "http://localhost/litecart/admin/?app=countries&doc=countries", wait, "Countries");
         }
     }
 }

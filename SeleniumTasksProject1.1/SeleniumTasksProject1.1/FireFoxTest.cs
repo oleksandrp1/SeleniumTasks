@@ -58,7 +58,7 @@ namespace SeleniumTasksProject1._1
 
             general.GoToPage(driver, "http://localhost/litecart/admin/", wait, "My Store");
             loginPage.Login(driver, wait, "admin", "admin");
-            general.GoToPage(driver, "http://localhost/litecart/admin/?app=countries&doc=countries", wait, "Countires");
+            general.GoToPage(driver, "http://localhost/litecart/admin/?app=countries&doc=countries", wait, "Countries");
             adminCountriesPage.VerifySortingCountries(driver, wait);
         }
 
@@ -68,6 +68,7 @@ namespace SeleniumTasksProject1._1
             general = new General();
             LoginPage loginPage = new LoginPage();
             AdminGeoZonesPage adminGeoZonesPage = new AdminGeoZonesPage();
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
 
             general.GoToPage(driver, "http://localhost/litecart/admin/", wait, "My Store");
             loginPage.Login(driver, wait, "admin", "admin");

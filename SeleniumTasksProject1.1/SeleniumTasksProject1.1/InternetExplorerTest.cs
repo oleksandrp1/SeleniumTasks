@@ -54,7 +54,7 @@ namespace SeleniumTasksProject1._1
 
             general.GoToPage(driver, "http://localhost/litecart/admin/", wait, "My Store");
             loginPage.Login(driver, wait, "admin", "admin");
-            general.GoToPage(driver, "http://localhost/litecart/admin/?app=countries&doc=countries", wait, "Countires");
+            general.GoToPage(driver, "http://localhost/litecart/admin/?app=countries&doc=countries", wait, "Countries");
             adminCountriesPage.VerifySortingCountries(driver, wait);
         }
 
