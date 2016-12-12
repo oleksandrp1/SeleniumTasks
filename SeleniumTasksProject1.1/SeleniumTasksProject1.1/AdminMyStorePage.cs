@@ -40,5 +40,25 @@ namespace SeleniumTasksProject1._1
                 }
             }
         }
+
+        public void GoToSection(IWebDriver driver, string section, WebDriverWait wait = null)
+        {
+            IList<IWebElement> sections = driver.FindElements(By.ClassName("name"));
+            for (int i=0; i<sections.Count; i++)
+            {
+                if (sections[i].GetAttribute("textContent")==section)
+                {
+                    sections[i].Click();
+                    wait.Until(ExpectedConditions.TitleContains(section));
+                    break;
+                }
+            }
+        }
+
+        public void Logout(IWebDriver driver, WebDriverWait wait)
+        {
+            driver.FindElement(By.CssSelector("a[title='Logout']")).Click();
+            wait.Until(ExpectedConditions.TitleIs("My Store"));
+        }
     }
 }

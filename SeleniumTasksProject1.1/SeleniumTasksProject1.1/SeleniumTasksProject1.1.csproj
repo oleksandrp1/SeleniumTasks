@@ -68,10 +68,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AdminCountiresPage.cs" />
+    <Compile Include="AdminCreateNewUserPage.cs" />
     <Compile Include="AdminEditCountryPage.cs" />
     <Compile Include="AdminEditGeoZonePage.cs" />
     <Compile Include="AdminGeoZonesPage.cs" />
     <Compile Include="AdminMyStorePage.cs" />
+    <Compile Include="AdminUsersPage.cs" />
     <Compile Include="General.cs" />
     <Compile Include="InternetExplorerTest.cs" />
     <Compile Include="ChromeTest.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FireFoxTest.cs" />
     <Compile Include="SubcategoryPage.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

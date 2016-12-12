@@ -89,6 +89,25 @@ namespace SeleniumTasksProject1._1
             subcategoryPage.CompareProducts(driver, product);
         }
 
+        [Test]
+        public void RegisterUserInFF()
+        {
+            LoginPage loginPage = new LoginPage();
+            AdminMyStorePage adminMyStorePage = new AdminMyStorePage();
+            AdminUsersPage adminUsersPage = new AdminUsersPage();
+            AdminCreateNewUserPage adminCreateNewUserPage = new AdminCreateNewUserPage();
+            General general = new General();
+            User user = new User();
+
+            general.GoToPage(driver, "http://localhost/litecart/admin", wait, "My Store");
+            loginPage.Login(driver, wait, "admin", "admin");
+            adminMyStorePage.GoToSection(driver, "Users", wait);
+            adminUsersPage.ClickCreateNewUser(driver, wait);
+            user = adminCreateNewUserPage.CreateUser(driver, wait, "user" + DateTime.Now.ToString("hhmmss"), "12345");
+            adminMyStorePage.Logout(driver, wait);
+            loginPage.Login(driver, wait, user.username, user.password);
+        }
+
         [TearDown]
         public void stop()
         {
