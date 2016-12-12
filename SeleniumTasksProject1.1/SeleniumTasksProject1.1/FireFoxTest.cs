@@ -81,9 +81,12 @@ namespace SeleniumTasksProject1._1
         {
             general = new General();
             OnlineStorePage onlineStorePage = new OnlineStorePage();
+            SubcategoryPage subcategoryPage = new SubcategoryPage();
+            Product product = new Product();
 
             general.GoToPage(driver, "http://localhost/litecart/en/", wait, "Online Store | My Store");
-            onlineStorePage.ClickOnProduct(driver, wait, "Campaigns", 1);
+            product = onlineStorePage.ClickOnProduct(driver, wait, "Campaigns", 1);
+            subcategoryPage.CompareProducts(driver, product);
         }
 
         [TearDown]
