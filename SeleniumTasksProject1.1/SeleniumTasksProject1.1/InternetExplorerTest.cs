@@ -71,6 +71,17 @@ namespace SeleniumTasksProject1._1
             adminGeoZonesPage.GoToEachCountryAndVerifySortingTimeZones(driver, wait);
         }
 
+        [Test]
+        public void CompareProductsInIE()
+        {
+            general = new General();
+            OnlineStorePage onlineStorePage = new OnlineStorePage();
+
+            general.GoToPage(driver, "http://localhost/litecart/en/", wait, "Online Store | My Store");
+            onlineStorePage.ClickOnProduct(driver, wait, "Campaigns", 1);
+        }
+
+
         [TearDown]
         public void stop()
         {
