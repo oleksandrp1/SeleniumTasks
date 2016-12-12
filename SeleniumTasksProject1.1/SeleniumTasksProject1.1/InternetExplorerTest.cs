@@ -101,6 +101,7 @@ namespace SeleniumTasksProject1._1
             user = adminCreateNewUserPage.CreateUser(driver, wait, "user" + DateTime.Now.ToString("hhmmss"), "12345");
             adminMyStorePage.Logout(driver, wait);
             loginPage.Login(driver, wait, user.username, user.password);
+            adminMyStorePage.Logout(driver, wait);
         }
 
 
