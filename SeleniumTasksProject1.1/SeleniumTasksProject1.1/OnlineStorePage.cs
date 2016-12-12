@@ -34,5 +34,29 @@ namespace SeleniumTasksProject1._1
                 }
             }
         }
+
+        public void ClickOnProduct(IWebDriver driver, WebDriverWait wait, string category, int order)
+        {
+            IWebElement productOnMainPage = null;
+            SubcategoryPage subcategoryPage = new SubcategoryPage();
+            Product product = new Product();
+            
+            category = category.ToLower().Replace(" ", "-");
+            productOnMainPage = driver.FindElement(By.XPath(".//*[@id='box-" + category + "']//li[" + order + "]/a[1]"));
+
+            product.price1 = productOnMainPage.FindElement(By.ClassName("regular-price")).GetAttribute("textContent");
+            product.price2 = productOnMainPage.FindElement(By.ClassName("campaign-price")).GetAttribute("textContent");
+            product.className1 = productOnMainPage.FindElement(By.ClassName("regular-price")).GetAttribute("className");
+            product.className2 = productOnMainPage.FindElement(By.ClassName("campaign-price")).GetAttribute("className");
+            product.title = productOnMainPage.GetAttribute("title");
+            product.fontStyle1 = productOnMainPage.FindElement(By.ClassName("regular-price")).GetCssValue("font-weight");
+            product.fontStyle2 = productOnMainPage.FindElement(By.ClassName("campaign-price")).GetCssValue("font-weight");
+            product.fontDecoration1 = productOnMainPage.FindElement(By.ClassName("regular-price")).GetCssValue("text-decoration");
+            product.fontDecoration2 = productOnMainPage.FindElement(By.ClassName("campaign-price")).GetCssValue("text-decoration");
+
+            productOnMainPage.Click();
+            wait.Until(ExpectedConditions.TitleContains(product.title));
+            subcategoryPage.CompareProducts(driver, product);
+        }
     }
 }
