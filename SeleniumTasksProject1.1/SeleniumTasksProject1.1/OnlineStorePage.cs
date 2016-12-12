@@ -35,7 +35,7 @@ namespace SeleniumTasksProject1._1
             }
         }
 
-        public void ClickOnProduct(IWebDriver driver, WebDriverWait wait, string category, int order)
+        public Product ClickOnProduct(IWebDriver driver, WebDriverWait wait, string category, int order)
         {
             IWebElement productOnMainPage = null;
             SubcategoryPage subcategoryPage = new SubcategoryPage();
@@ -56,7 +56,7 @@ namespace SeleniumTasksProject1._1
 
             productOnMainPage.Click();
             wait.Until(ExpectedConditions.TitleContains(product.title));
-            subcategoryPage.CompareProducts(driver, product);
+            return product;
         }
     }
 }
