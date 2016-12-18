@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
+using SeleniumTasksProject1;
+using SeleniumTasksProject1.Records;
 
-namespace SeleniumTasksProject1._1
+namespace SeleniumTasksProject1.Pages
 {
     public class AdminUsersPage
     {

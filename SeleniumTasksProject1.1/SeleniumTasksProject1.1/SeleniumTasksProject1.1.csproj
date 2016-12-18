@@ -67,23 +67,26 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AdminCountiresPage.cs" />
-    <Compile Include="AdminCreateNewUserPage.cs" />
-    <Compile Include="AdminEditCountryPage.cs" />
-    <Compile Include="AdminEditGeoZonePage.cs" />
-    <Compile Include="AdminGeoZonesPage.cs" />
-    <Compile Include="AdminMyStorePage.cs" />
-    <Compile Include="AdminUsersPage.cs" />
-    <Compile Include="General.cs" />
-    <Compile Include="InternetExplorerTest.cs" />
-    <Compile Include="ChromeTest.cs" />
-    <Compile Include="LoginPage.cs" />
-    <Compile Include="OnlineStorePage.cs" />
-    <Compile Include="Product.cs" />
+    <Compile Include="Pages\AdminAddNewProductPage.cs" />
+    <Compile Include="Pages\AdminCatalogPage.cs" />
+    <Compile Include="Pages\AdminCountiresPage.cs" />
+    <Compile Include="Pages\AdminCreateNewUserPage.cs" />
+    <Compile Include="Pages\AdminEditCountryPage.cs" />
+    <Compile Include="Pages\AdminEditGeoZonePage.cs" />
+    <Compile Include="Pages\AdminGeoZonesPage.cs" />
+    <Compile Include="Pages\AdminMyStorePage.cs" />
+    <Compile Include="Pages\AdminUsersPage.cs" />
+    <Compile Include="Pages\GeneralPage.cs" />
+    <Compile Include="Tests\Initialization.cs" />
+    <Compile Include="Tests\InternetExplorerTest.cs" />
+    <Compile Include="Tests\ChromeTest.cs" />
+    <Compile Include="Pages\AdminLoginPage.cs" />
+    <Compile Include="Pages\OnlineStorePage.cs" />
+    <Compile Include="Records\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FireFoxTest.cs" />
-    <Compile Include="SubcategoryPage.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Tests\FireFoxTest.cs" />
+    <Compile Include="Pages\SubcategoryPage.cs" />
+    <Compile Include="Records\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

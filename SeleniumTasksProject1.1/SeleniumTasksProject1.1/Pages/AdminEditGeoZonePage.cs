@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
+using SeleniumTasksProject1;
+using SeleniumTasksProject1.Records;
 
-namespace SeleniumTasksProject1._1
+namespace SeleniumTasksProject1.Pages
 {
     public class AdminEditGeoZonePage
     {
         public void VerifySortingTimezones(IWebDriver driver, WebDriverWait wait)
         {
+            AdminGeoZonesPage adminGeoZonesPage = new AdminGeoZonesPage();
             IList<IWebElement> timezones = null;
             List<string> sortedTimezones = null;
-            General general = new General();
+            //General general = new General();
 
             timezones = driver.FindElements(By.XPath(".//*[@id='table-zones']/tbody/tr/td[3]/select"));
             sortedTimezones = new List<string>(timezones.Count);
@@ -31,7 +34,7 @@ namespace SeleniumTasksProject1._1
                 sortedTimezones[a].CompareTo(timezones[a].FindElement(By.CssSelector("[selected='selected']")).GetAttribute("text"));
             }
 
-            general.GoToPage(driver, "http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones", wait, "Geo Zones");
+            adminGeoZonesPage.Open(driver, wait);
         }
     }
 }

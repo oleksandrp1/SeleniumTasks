@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeleniumTasksProject1._1
+namespace SeleniumTasksProject1.Records
 {
     public class User
     {

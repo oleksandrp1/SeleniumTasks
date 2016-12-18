@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
+using SeleniumTasksProject1;
+using SeleniumTasksProject1.Records;
 
-namespace SeleniumTasksProject1._1
+namespace SeleniumTasksProject1.Pages
 {
     public class AdminCreateNewUserPage
     {
-        public User CreateUser(IWebDriver driver, WebDriverWait wait, string username, string password)
+        public User CreateUser(IWebDriver driver, WebDriverWait wait, User user, string username, string password)
         {
-            User user = new User();
             FillAllFields(driver, username, password);
             user.username = username;
             user.password = password;
