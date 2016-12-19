@@ -78,5 +78,19 @@ namespace SeleniumTasksProject1.Pages
             driver.FindElement(By.LinkText("Checkout »"));
             wait.Until(ExpectedConditions.TitleContains("Checkout"));
         }
+
+        public void AddProductsToCart(IWebDriver driver, WebDriverWait wait, string category, int quantity)
+        {
+            ProductPage productPage = new ProductPage();
+            Product product = new Product();
+            OnlineStorePage onlineStorePage = new OnlineStorePage();
+
+            for (int i = 1; i <= quantity; i++)
+            {
+                product = onlineStorePage.ClickOnProduct(driver, wait, category, i);
+                productPage.AddToChart(driver, wait, product);
+                onlineStorePage.Open(driver, wait);
+            }
+        }
     }
 }

@@ -173,12 +173,7 @@ namespace SeleniumTasksProject1.Tests
             CheckoutPage checkoutPage = new CheckoutPage();
 
             onlineStorePage.Open(driver, wait);
-            for (int i=1; i<=3; i++)
-            {
-                product = onlineStorePage.ClickOnProduct(driver, wait, "Most Popular", i);
-                productPage.AddToChart(driver, wait, product);
-                onlineStorePage.Open(driver, wait);
-            }
+            onlineStorePage.AddProductsToCart(driver, wait, "Most Popular", 3);
             generalPage.ClickCheckout(driver, wait);
             checkoutPage.RemoveAllProducts(driver, wait);
         }
