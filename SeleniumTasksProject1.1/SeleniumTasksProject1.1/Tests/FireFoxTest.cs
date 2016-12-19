@@ -89,13 +89,13 @@ namespace SeleniumTasksProject1.Tests
         {
             //general = new GeneralPage();
             OnlineStorePage onlineStorePage = new OnlineStorePage();
-            SubcategoryPage subcategoryPage = new SubcategoryPage();
+            ProductPage productPage = new ProductPage();
             Product product = new Product();
 
             //general.GoToPage(driver, "http://localhost/litecart/en/", wait, "Online Store | My Store");
             onlineStorePage.Open(driver, wait);
             product = onlineStorePage.ClickOnProduct(driver, wait, "Campaigns", 1);
-            subcategoryPage.CompareProducts(driver, product);
+            productPage.CompareProducts(driver, product);
         }
 
         [Test]

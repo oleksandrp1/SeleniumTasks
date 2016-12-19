@@ -24,5 +24,11 @@ namespace SeleniumTasksProject1.Pages
                 wait.Until(ExpectedConditions.TitleContains(title));
             }
         }*/
+
+        public void ClickCheckout(IWebDriver driver, WebDriverWait wait)
+        {
+            driver.FindElement(By.LinkText("Checkout »")).Click();
+            wait.Until(ExpectedConditions.TitleContains("Checkout"));
+        }
     }
 }

@@ -11,7 +11,7 @@ using SeleniumTasksProject1.Records;
 
 namespace SeleniumTasksProject1.Pages
 {
-    public class SubcategoryPage
+    public class ProductPage
     {
         public void CompareProducts(IWebDriver driver, Product product)
         {
@@ -28,6 +28,24 @@ namespace SeleniumTasksProject1.Pages
             int priceFont1 = Convert.ToInt16(driver.FindElement(By.ClassName("regular-price")).GetCssValue("font-size").Replace("px", ""));
             int priceFont2 = Convert.ToInt16(driver.FindElement(By.ClassName("campaign-price")).GetCssValue("font-size").Replace("px", ""));
             Assert.IsTrue(priceFont1 < priceFont2);
+        }
+
+        public void AddToChart(IWebDriver driver, WebDriverWait wait, Product product)
+        {
+            int quantity = Convert.ToInt16(driver.FindElement(By.ClassName("quantity")).GetAttribute("textContent"));
+
+            if (driver.FindElements(By.Name("options[Size]")).Count > 0)
+            {
+                new SelectElement(driver.FindElement(By.Name("options[Size]"))).SelectByText("Small");
+            }
+            driver.FindElement(By.Name("add_cart_product")).Click();
+            wait.Until(ExpectedConditions.TextToBePresentInElement(driver.FindElement(By.ClassName("quantity")), Convert.ToString(quantity+1)));
+        }
+
+        public void ClickCheckout(IWebDriver driver, WebDriverWait wait)
+        {
+            driver.FindElement(By.LinkText("Checkout »"));
+            wait.Until(ExpectedConditions.TitleContains("Checkout"));
         }
     }
 }

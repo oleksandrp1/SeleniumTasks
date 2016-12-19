@@ -46,25 +46,37 @@ namespace SeleniumTasksProject1.Pages
         public Product ClickOnProduct(IWebDriver driver, WebDriverWait wait, string category, int order)
         {
             IWebElement productOnMainPage = null;
-            SubcategoryPage subcategoryPage = new SubcategoryPage();
             Product product = new Product();
             
             category = category.ToLower().Replace(" ", "-");
             productOnMainPage = driver.FindElement(By.XPath(".//*[@id='box-" + category + "']//li[" + order + "]/a[1]"));
 
-            product.price1 = productOnMainPage.FindElement(By.ClassName("regular-price")).GetAttribute("textContent");
-            product.price2 = productOnMainPage.FindElement(By.ClassName("campaign-price")).GetAttribute("textContent");
-            product.className1 = productOnMainPage.FindElement(By.ClassName("regular-price")).GetAttribute("className");
+            //product.price1 = productOnMainPage.FindElement(By.ClassName("regular-price")).GetAttribute("textContent");
+            if (productOnMainPage.FindElements(By.ClassName("campaign-price")).Count > 0)
+            {
+                product.price2 = productOnMainPage.FindElement(By.ClassName("campaign-price")).GetAttribute("textContent");
+            }
+            else
+            {
+                product.price2 = productOnMainPage.FindElement(By.ClassName("price")).GetAttribute("textContent");
+            }
+            /*product.className1 = productOnMainPage.FindElement(By.ClassName("regular-price")).GetAttribute("className");
             product.className2 = productOnMainPage.FindElement(By.ClassName("campaign-price")).GetAttribute("className");
             product.title = productOnMainPage.GetAttribute("title");
             product.fontStyle1 = productOnMainPage.FindElement(By.ClassName("regular-price")).GetCssValue("font-weight");
             product.fontStyle2 = productOnMainPage.FindElement(By.ClassName("campaign-price")).GetCssValue("font-weight");
             product.fontDecoration1 = productOnMainPage.FindElement(By.ClassName("regular-price")).GetCssValue("text-decoration");
-            product.fontDecoration2 = productOnMainPage.FindElement(By.ClassName("campaign-price")).GetCssValue("text-decoration");
+            product.fontDecoration2 = productOnMainPage.FindElement(By.ClassName("campaign-price")).GetCssValue("text-decoration");*/
 
             productOnMainPage.Click();
             wait.Until(ExpectedConditions.TitleContains(product.title));
             return product;
+        }
+
+        public void ClickCheckout(IWebDriver driver, WebDriverWait wait)
+        {
+            driver.FindElement(By.LinkText("Checkout »"));
+            wait.Until(ExpectedConditions.TitleContains("Checkout"));
         }
     }
 }

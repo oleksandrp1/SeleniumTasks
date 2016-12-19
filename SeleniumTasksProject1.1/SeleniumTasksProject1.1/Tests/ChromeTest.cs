@@ -88,13 +88,13 @@ namespace SeleniumTasksProject1.Tests
         {
             //general = new GeneralPage();
             OnlineStorePage onlineStorePage = new OnlineStorePage();
-            SubcategoryPage subcategoryPage = new SubcategoryPage();
+            ProductPage productPage = new ProductPage();
             Product product = new Product();
 
             //general.GoToPage(driver, "http://localhost/litecart/en/", wait, "Online Store | My Store");
             onlineStorePage.Open(driver, wait);
             product = onlineStorePage.ClickOnProduct(driver, wait, "Campaigns", 1);
-            subcategoryPage.CompareProducts(driver, product);
+            productPage.CompareProducts(driver, product);
         }
 
         [Test]
@@ -161,6 +161,26 @@ namespace SeleniumTasksProject1.Tests
                                                     "16.77",
                                                     "17.66");
             adminCatalogPage.VerifyProductExists(driver, "Test name");
+        }
+
+        [Test]
+        public void AddProductsToCartAndDeleteInCrome()
+        {
+            OnlineStorePage onlineStorePage = new OnlineStorePage();
+            ProductPage productPage = new ProductPage();
+            Product product = new Product();
+            GeneralPage generalPage = new GeneralPage();
+            CheckoutPage checkoutPage = new CheckoutPage();
+
+            onlineStorePage.Open(driver, wait);
+            for (int i=1; i<=3; i++)
+            {
+                product = onlineStorePage.ClickOnProduct(driver, wait, "Most Popular", i);
+                productPage.AddToChart(driver, wait, product);
+                onlineStorePage.Open(driver, wait);
+            }
+            generalPage.ClickCheckout(driver, wait);
+            checkoutPage.RemoveAllProducts(driver, wait);
         }
     }
 }
