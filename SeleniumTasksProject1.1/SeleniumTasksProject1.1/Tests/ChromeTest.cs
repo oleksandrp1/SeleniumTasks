@@ -6,6 +6,7 @@ using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Chrome;
 using SeleniumTasksProject1.Pages;
 using SeleniumTasksProject1.Records;
+using OpenQA.Selenium.Support.Events;
 
 namespace SeleniumTasksProject1.Tests
 {
@@ -13,13 +14,16 @@ namespace SeleniumTasksProject1.Tests
     public class Chrome : Initialization
     {
         //GeneralPage general = null;
-        private IWebDriver driver;
+        private EventFiringWebDriver driver;
         private WebDriverWait wait;
 
         [SetUp]
         public void start()
         {
-            driver = new ChromeDriver();
+            driver = new EventFiringWebDriver(new ChromeDriver());
+            driver.FindingElement += (sender, e) => Console.WriteLine(DateTime.Now.ToString("ddmmyy hh:mm:ss ") + e.FindMethod);
+            driver.FindElementCompleted += (sender, e) => Console.WriteLine(DateTime.Now.ToString("ddmmyy hh:mm:ss ") + e.FindMethod + " found");
+            driver.ExceptionThrown += (sender, e) => Console.WriteLine(DateTime.Now.ToString("ddmmyy hh:mm:ss ") + e.ThrownException);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
@@ -190,6 +194,21 @@ namespace SeleniumTasksProject1.Tests
             adminCoutriesPage.Open(driver, wait);
             adminCoutriesPage.AddNewCountry(driver, wait);
             adminAddNewCountryPage.ClickAllExternalLinks(driver, wait);
+        }
+
+        [Test]
+        public void VerifyLogsInChrome()
+        {
+            AdminLoginPage adminLoginPage = new AdminLoginPage();
+            AdminCatalogPage adminCatalogPage = new AdminCatalogPage();
+            AdminOrdersPage adminOrdersPage = new AdminOrdersPage();
+
+            adminLoginPage.Open(driver, wait);
+            adminLoginPage.Login(driver, wait, "admin", "admin");
+            adminCatalogPage.Open(driver, wait);
+            adminCatalogPage.OpenEachProduct(driver, wait);
+            adminOrdersPage.Open(driver, wait);
+            adminOrdersPage.CreateNewOrder(driver, wait);
         }
     }
 }
