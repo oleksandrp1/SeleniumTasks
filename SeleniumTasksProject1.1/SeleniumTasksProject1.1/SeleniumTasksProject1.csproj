@@ -67,6 +67,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Pages\AdminAddNewCountryPage.cs" />
     <Compile Include="Pages\AdminAddNewProductPage.cs" />
     <Compile Include="Pages\AdminCatalogPage.cs" />
     <Compile Include="Pages\AdminCountiresPage.cs" />

@@ -57,5 +57,11 @@ namespace SeleniumTasksProject1.Pages
                 adminEditCountryPage.VerifySortingTimezones(driver, wait);     
             }
         }
+
+        public void AddNewCountry(IWebDriver driver, WebDriverWait wait)
+        {
+            driver.FindElement(By.LinkText("Add New Country")).Click();
+            wait.Until(ExpectedConditions.TitleContains("Add New Country"));
+        }
     }
 }

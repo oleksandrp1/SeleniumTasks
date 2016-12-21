@@ -177,5 +177,19 @@ namespace SeleniumTasksProject1.Tests
             generalPage.ClickCheckout(driver, wait);
             checkoutPage.RemoveAllProducts(driver, wait);
         }
+
+        [Test]
+        public void OpenNewWindowsByClickOnLinkInChrome()
+        {
+            AdminLoginPage adminLoginPage = new AdminLoginPage();
+            AdminCountiresPage adminCoutriesPage = new AdminCountiresPage();
+            AdminAddNewCountryPage adminAddNewCountryPage = new AdminAddNewCountryPage();
+
+            adminLoginPage.Open(driver, wait);
+            adminLoginPage.Login(driver, wait, "admin", "admin");
+            adminCoutriesPage.Open(driver, wait);
+            adminCoutriesPage.AddNewCountry(driver, wait);
+            adminAddNewCountryPage.ClickAllExternalLinks(driver, wait);
+        }
     }
 }
