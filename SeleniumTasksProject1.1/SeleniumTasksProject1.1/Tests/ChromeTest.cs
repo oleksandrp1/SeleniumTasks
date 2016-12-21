@@ -38,13 +38,13 @@ namespace SeleniumTasksProject1.Tests
         public void OpenAllElementsInChrome()
         {
             ////general = new GeneralPage();
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
-            AdminMyStorePage adminMyStorePage = new AdminMyStorePage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
+            AdminMyStorePage adminMyStorePage = new AdminMyStorePage(driver, wait);
 
             //general.GoToPage(driver, "http://localhost/litecart/admin/", wait, "My Store");
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
-            adminMyStorePage.OpenAllElements(driver, wait);
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
+            adminMyStorePage.OpenAllElements();
         }
 
         [Test]
@@ -62,12 +62,12 @@ namespace SeleniumTasksProject1.Tests
         public void VerifySortingCountriesInChrome()
         {
             //general = new GeneralPage();
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
             AdminCountiresPage adminCountriesPage = new AdminCountiresPage();
 
             //general.GoToPage(driver, "http://localhost/litecart/admin/", wait, "My Store");
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
             adminCountriesPage.Open(driver, wait);
             //general.GoToPage(driver, "http://localhost/litecart/admin/?app=countries&doc=countries", wait, "Countries");
             adminCountriesPage.VerifySortingCountries(driver, wait);
@@ -77,12 +77,12 @@ namespace SeleniumTasksProject1.Tests
         public void VerifySortingTimezonesInChrome()
         {
             //general = new GeneralPage();
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
             AdminGeoZonesPage adminGeoZonesPage = new AdminGeoZonesPage();
 
             //general.GoToPage(driver, "http://localhost/litecart/admin/", wait, "My Store");
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
             //general.GoToPage(driver, "http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones", wait, "Geo Zones");
             adminGeoZonesPage.GoToEachCountryAndVerifySortingTimeZones(driver, wait);
         }
@@ -104,40 +104,39 @@ namespace SeleniumTasksProject1.Tests
         [Test]
         public void RegisterUserInChrome()
         {
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
-            AdminMyStorePage adminMyStorePage = new AdminMyStorePage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
+            AdminMyStorePage adminMyStorePage = new AdminMyStorePage(driver, wait);
             AdminUsersPage adminUsersPage = new AdminUsersPage();
             AdminCreateNewUserPage adminCreateNewUserPage = new AdminCreateNewUserPage();
             ////general = new GeneralPage();
             User user = new User();
 
             //general.GoToPage(driver, "http://localhost/litecart/admin", wait, "My Store");
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
-            adminMyStorePage.GoToSection(driver, "Users", wait);
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
+            adminMyStorePage.GoToSection("Users");
             adminUsersPage.ClickCreateNewUser(driver, wait);
             adminCreateNewUserPage.CreateUser(driver, wait, user, "user" + DateTime.Now.ToString("hhmmss"), "12345");
-            adminMyStorePage.Logout(driver, wait);
-            adminLoginPage.Login(driver, wait, user.username, user.password);
-            adminMyStorePage.Logout(driver, wait);
+            adminMyStorePage.Logout();
+            adminLoginPage.Login(user.username, user.password);
+            adminMyStorePage.Logout();
         }
 
         [Test]
         public void AddProductInChrome()
         {
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
-            AdminMyStorePage adminMyStorePage = new AdminMyStorePage();
-            AdminCatalogPage adminCatalogPage = new AdminCatalogPage();
-            AdminAddNewProductPage adminAddNewProductPage = new AdminAddNewProductPage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
+            AdminMyStorePage adminMyStorePage = new AdminMyStorePage(driver, wait);
+            AdminCatalogPage adminCatalogPage = new AdminCatalogPage(driver, wait);
+            AdminAddNewProductPage adminAddNewProductPage = new AdminAddNewProductPage(driver, wait);
             //general = new GeneralPage();
 
             //general.GoToPage(driver, "http://localhost/litecart/admin", wait, "My Store");
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
-            adminMyStorePage.GoToSection(driver, "Catalog", wait);
-            adminCatalogPage.ClickAddNewProduct(driver, wait);
-            adminAddNewProductPage.CreateProduct(driver, wait,
-                                                    "Test name", 
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
+            adminMyStorePage.GoToSection("Catalog");
+            adminCatalogPage.ClickAddNewProduct();
+            adminAddNewProductPage.CreateProduct("Test name", 
                                                     true, 
                                                     "test code1234", 
                                                     "Subcategory", 
@@ -164,7 +163,7 @@ namespace SeleniumTasksProject1.Tests
                                                     "15.88",
                                                     "16.77",
                                                     "17.66");
-            adminCatalogPage.VerifyProductExists(driver, "Test name");
+            adminCatalogPage.VerifyProductExists("Test name");
         }
 
         [Test]
@@ -185,12 +184,12 @@ namespace SeleniumTasksProject1.Tests
         [Test]
         public void OpenNewWindowsByClickOnLinkInChrome()
         {
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
             AdminCountiresPage adminCoutriesPage = new AdminCountiresPage();
             AdminAddNewCountryPage adminAddNewCountryPage = new AdminAddNewCountryPage();
 
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
             adminCoutriesPage.Open(driver, wait);
             adminCoutriesPage.AddNewCountry(driver, wait);
             adminAddNewCountryPage.ClickAllExternalLinks(driver, wait);
@@ -199,14 +198,14 @@ namespace SeleniumTasksProject1.Tests
         [Test]
         public void VerifyLogsInChrome()
         {
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
-            AdminCatalogPage adminCatalogPage = new AdminCatalogPage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
+            AdminCatalogPage adminCatalogPage = new AdminCatalogPage(driver, wait);
             AdminOrdersPage adminOrdersPage = new AdminOrdersPage();
 
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
             adminCatalogPage.Open(driver, wait);
-            adminCatalogPage.OpenEachProduct(driver, wait);
+            adminCatalogPage.OpenEachProduct();
             adminOrdersPage.Open(driver, wait);
             adminOrdersPage.CreateNewOrder(driver, wait);
         }

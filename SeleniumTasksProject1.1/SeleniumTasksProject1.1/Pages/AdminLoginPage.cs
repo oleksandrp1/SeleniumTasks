@@ -14,7 +14,17 @@ namespace SeleniumTasksProject1.Pages
 {
     internal class AdminLoginPage : GeneralPage
     {
-        public void Login(IWebDriver driver, WebDriverWait wait, string username, string password)
+        private IWebDriver driver;
+        private WebDriverWait wait;
+
+        public AdminLoginPage(IWebDriver driver1, WebDriverWait wait1)
+        {
+            driver = driver1;
+            wait = wait1;
+        }
+
+
+        public void Login(string username, string password)
         {
             driver.FindElement(By.Name("username")).SendKeys(username);
             driver.FindElement(By.Name("password")).SendKeys(password);
@@ -22,7 +32,7 @@ namespace SeleniumTasksProject1.Pages
             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("div.notice.success")));
         }
 
-        public void Open(IWebDriver driver, WebDriverWait wait)
+        public void Open()
         {
             driver.Url = "http://localhost/litecart/admin/";
             wait.Until(ExpectedConditions.TitleIs("My Store"));

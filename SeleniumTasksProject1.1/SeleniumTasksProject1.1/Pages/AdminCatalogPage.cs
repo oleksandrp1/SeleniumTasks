@@ -14,13 +14,22 @@ namespace SeleniumTasksProject1.Pages
 {
     public class AdminCatalogPage
     {
-        public void ClickAddNewProduct(IWebDriver driver, WebDriverWait wait)
+        private IWebDriver driver;
+        private WebDriverWait wait;
+
+        public AdminCatalogPage(IWebDriver driver1, WebDriverWait wait1)
+        {
+            driver = driver1;
+            wait = wait1;
+        }
+
+        public void ClickAddNewProduct()
         {
             driver.FindElement(By.LinkText("Add New Product")).Click();
             wait.Until(ExpectedConditions.TitleContains("Add New Product"));
         }
 
-        public void VerifyProductExists(IWebDriver driver, string product)
+        public void VerifyProductExists(string product)
         {
             Assert.AreEqual(product, driver.FindElement(By.LinkText(product)).GetAttribute("textContent"));
         }
@@ -31,7 +40,7 @@ namespace SeleniumTasksProject1.Pages
             wait.Until(ExpectedConditions.TitleContains("Catalog"));
         }
 
-        public void OpenEachProduct(IWebDriver driver, WebDriverWait wait)
+        public void OpenEachProduct()
         {
             int numberOfProducts = 0;
             numberOfProducts = driver.FindElements(By.XPath(".//td[3]/a[contains(@href, 'product_id')]")).Count;

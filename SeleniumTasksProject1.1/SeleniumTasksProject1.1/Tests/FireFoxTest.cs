@@ -34,14 +34,14 @@ namespace SeleniumTasksProject1.Tests
         [Test]
         public void OpenAllElementsInFF()
         {
-            //general = new GeneralPage();
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
-            AdminMyStorePage adminMyStorePage = new AdminMyStorePage();
+            ////general = new GeneralPage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
+            AdminMyStorePage adminMyStorePage = new AdminMyStorePage(driver, wait);
 
             //general.GoToPage(driver, "http://localhost/litecart/admin/", wait, "My Store");
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
-            adminMyStorePage.OpenAllElements(driver, wait);
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
+            adminMyStorePage.OpenAllElements();
         }
 
         [Test]
@@ -59,12 +59,12 @@ namespace SeleniumTasksProject1.Tests
         public void VerifySortingCountriesInFF()
         {
             //general = new GeneralPage();
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
             AdminCountiresPage adminCountriesPage = new AdminCountiresPage();
 
             //general.GoToPage(driver, "http://localhost/litecart/admin/", wait, "My Store");
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
             adminCountriesPage.Open(driver, wait);
             //general.GoToPage(driver, "http://localhost/litecart/admin/?app=countries&doc=countries", wait, "Countries");
             adminCountriesPage.VerifySortingCountries(driver, wait);
@@ -74,12 +74,12 @@ namespace SeleniumTasksProject1.Tests
         public void VerifySortingTimezonesInFF()
         {
             //general = new GeneralPage();
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
             AdminGeoZonesPage adminGeoZonesPage = new AdminGeoZonesPage();
 
             //general.GoToPage(driver, "http://localhost/litecart/admin/", wait, "My Store");
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
             //general.GoToPage(driver, "http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones", wait, "Geo Zones");
             adminGeoZonesPage.GoToEachCountryAndVerifySortingTimeZones(driver, wait);
         }
@@ -101,22 +101,110 @@ namespace SeleniumTasksProject1.Tests
         [Test]
         public void RegisterUserInFF()
         {
-            AdminLoginPage adminLoginPage = new AdminLoginPage();
-            AdminMyStorePage adminMyStorePage = new AdminMyStorePage();
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
+            AdminMyStorePage adminMyStorePage = new AdminMyStorePage(driver, wait);
             AdminUsersPage adminUsersPage = new AdminUsersPage();
             AdminCreateNewUserPage adminCreateNewUserPage = new AdminCreateNewUserPage();
             ////general = new GeneralPage();
             User user = new User();
 
             //general.GoToPage(driver, "http://localhost/litecart/admin", wait, "My Store");
-            adminLoginPage.Open(driver, wait);
-            adminLoginPage.Login(driver, wait, "admin", "admin");
-            adminMyStorePage.GoToSection(driver, "Users", wait);
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
+            adminMyStorePage.GoToSection("Users");
             adminUsersPage.ClickCreateNewUser(driver, wait);
             adminCreateNewUserPage.CreateUser(driver, wait, user, "user" + DateTime.Now.ToString("hhmmss"), "12345");
-            adminMyStorePage.Logout(driver, wait);
-            adminLoginPage.Login(driver, wait, user.username, user.password);
-            adminMyStorePage.Logout(driver, wait);
+            adminMyStorePage.Logout();
+            adminLoginPage.Login(user.username, user.password);
+            adminMyStorePage.Logout();
+        }
+
+        [Test]
+        public void AddProductInFF()
+        {
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
+            AdminMyStorePage adminMyStorePage = new AdminMyStorePage(driver, wait);
+            AdminCatalogPage adminCatalogPage = new AdminCatalogPage(driver, wait);
+            AdminAddNewProductPage adminAddNewProductPage = new AdminAddNewProductPage(driver, wait);
+            //general = new GeneralPage();
+
+            //general.GoToPage(driver, "http://localhost/litecart/admin", wait, "My Store");
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
+            adminMyStorePage.GoToSection("Catalog");
+            adminCatalogPage.ClickAddNewProduct();
+            adminAddNewProductPage.CreateProduct("Test name",
+                                                    true,
+                                                    "test code1234",
+                                                    "Subcategory",
+                                                    "Subcategory",
+                                                    "Male",
+                                                    "12",
+                                                    "pcs",
+                                                    "3-5 days",
+                                                    "Temporary sold out",
+                                                    "D:\\Repository\\image.jpg",
+                                                    "01/01/2016",
+                                                    "02/02/2018",
+                                                    "ACME Corp.",
+                                                    "-- Select --",
+                                                    "test keyword1, test keyword2",
+                                                    "test short description",
+                                                    "test description line1\ntest description line2",
+                                                    "test head title",
+                                                    "test meta description",
+                                                    "13",
+                                                    "Euros",
+                                                    "-- Select --",
+                                                    "14.99",
+                                                    "15.88",
+                                                    "16.77",
+                                                    "17.66");
+            adminCatalogPage.VerifyProductExists("Test name");
+        }
+
+        [Test]
+        public void AddProductsToCartAndDeleteInCrome()
+        {
+            OnlineStorePage onlineStorePage = new OnlineStorePage();
+            ProductPage productPage = new ProductPage();
+            Product product = new Product();
+            GeneralPage generalPage = new GeneralPage();
+            CheckoutPage checkoutPage = new CheckoutPage();
+
+            onlineStorePage.Open(driver, wait);
+            onlineStorePage.AddProductsToCart(driver, wait, "Most Popular", 3);
+            generalPage.ClickCheckout(driver, wait);
+            checkoutPage.RemoveAllProducts(driver, wait);
+        }
+
+        [Test]
+        public void OpenNewWindowsByClickOnLinkInFF()
+        {
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
+            AdminCountiresPage adminCoutriesPage = new AdminCountiresPage();
+            AdminAddNewCountryPage adminAddNewCountryPage = new AdminAddNewCountryPage();
+
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
+            adminCoutriesPage.Open(driver, wait);
+            adminCoutriesPage.AddNewCountry(driver, wait);
+            adminAddNewCountryPage.ClickAllExternalLinks(driver, wait);
+        }
+
+        [Test]
+        public void VerifyLogsInFF()
+        {
+            AdminLoginPage adminLoginPage = new AdminLoginPage(driver, wait);
+            AdminCatalogPage adminCatalogPage = new AdminCatalogPage(driver, wait);
+            AdminOrdersPage adminOrdersPage = new AdminOrdersPage();
+
+            adminLoginPage.Open();
+            adminLoginPage.Login("admin", "admin");
+            adminCatalogPage.Open(driver, wait);
+            adminCatalogPage.OpenEachProduct();
+            adminOrdersPage.Open(driver, wait);
+            adminOrdersPage.CreateNewOrder(driver, wait);
         }
 
         [TearDown]

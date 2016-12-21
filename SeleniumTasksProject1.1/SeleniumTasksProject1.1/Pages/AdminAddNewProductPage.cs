@@ -12,9 +12,16 @@ namespace SeleniumTasksProject1.Pages
 {
     public class AdminAddNewProductPage
     {
-        public Product CreateProduct(IWebDriver driver, 
-                                    WebDriverWait wait, 
-                                    string name, 
+        private IWebDriver driver;
+        private WebDriverWait wait;
+
+        public AdminAddNewProductPage(IWebDriver driver1, WebDriverWait wait1)
+        {
+            driver = driver1;
+            wait = wait1;
+        }
+
+        public Product CreateProduct(string name, 
                                     bool status, 
                                     string code,
                                     string category, 
@@ -43,16 +50,14 @@ namespace SeleniumTasksProject1.Pages
                                     string priceInclTax2)
         {
             Product product = new Product();
-            FillAllFields(driver, wait, name, status, code, category, defaultCategory, productGroup, quantity, quantityUnit, deliveryStatus, soldOutStatus,
+            FillAllFields(name, status, code, category, defaultCategory, productGroup, quantity, quantityUnit, deliveryStatus, soldOutStatus,
                             imagePath, dateValidFrom, dateValidTo, manufacturer, supplier, keywords, shortDescription, description, headTitle, metaDescription,
                             purchasePrice, currency, taxClass, price1, priceInclTax1, price2, priceInclTax2);
-            ClickSave(driver, wait);
+            ClickSave();
             return product;
         }
 
-        public void FillAllFields(IWebDriver driver,
-                                    WebDriverWait wait,
-                                    string name,
+        public void FillAllFields(string name,
                                     bool status,
                                     string code,
                                     string category,
@@ -99,7 +104,7 @@ namespace SeleniumTasksProject1.Pages
             }
             //driver.FindElement(By.XPath("//input[@data-name='Rubber Ducks']")).Click();
 
-            SelectDefaultCategory(driver, defaultCategory);
+            SelectDefaultCategory(defaultCategory);
 
             switch (productGroup)
             {
@@ -116,16 +121,16 @@ namespace SeleniumTasksProject1.Pages
 
             driver.FindElement(By.Name("quantity")).Clear();
             driver.FindElement(By.Name("quantity")).SendKeys(quantity);
-            SelectQuantityUnit(driver, quantityUnit);
-            SelectDeliveryStatus(driver, deliveryStatus);
-            SelectSoldOutStatus(driver, soldOutStatus);
-            UploadImage(driver, By.Name("new_images[]"), imagePath);
+            SelectQuantityUnit(quantityUnit);
+            SelectDeliveryStatus(deliveryStatus);
+            SelectSoldOutStatus(soldOutStatus);
+            UploadImage(By.Name("new_images[]"), imagePath);
             driver.FindElement(By.Name("date_valid_from")).SendKeys(dateValidFrom);
             driver.FindElement(By.Name("date_valid_to")).SendKeys(dateValidTo);
             
             driver.FindElement(By.LinkText("Information")).Click();
-            SelectManufacturer(driver, manufacturer);
-            SelectSupplier(driver, supplier);
+            SelectManufacturer(manufacturer);
+            SelectSupplier(supplier);
             driver.FindElement(By.Name("keywords")).SendKeys(keywords);
             driver.FindElement(By.Name("short_description[en]")).SendKeys(shortDescription);
             driver.FindElement(By.Name("description[en]")).SendKeys(description);
@@ -137,7 +142,7 @@ namespace SeleniumTasksProject1.Pages
             driver.FindElement(By.Name("purchase_price")).Clear();
             driver.FindElement(By.Name("purchase_price")).SendKeys(purchasePrice);
             driver.FindElement(By.Name("purchase_price_currency_code")).SendKeys(currency);
-            SelectTaxClass(driver, taxClass);
+            SelectTaxClass(taxClass);
             driver.FindElement(By.Name("prices[USD]")).Clear();
             driver.FindElement(By.Name("prices[USD]")).SendKeys(price1);
             //driver.FindElement(By.Name("gross_prices[USD]")).SendKeys(priceInclTax1);
@@ -146,7 +151,7 @@ namespace SeleniumTasksProject1.Pages
             //driver.FindElement(By.Name("gross_prices[EUR]")).SendKeys(priceInclTax2);
         }
 
-        public void SelectEnabled(IWebDriver driver)
+        public void SelectEnabled()
         {
             if (!driver.FindElement(By.Name("status")).Selected)
             {
@@ -154,7 +159,7 @@ namespace SeleniumTasksProject1.Pages
             }
         }
 
-        public void ClickSave(IWebDriver driver, WebDriverWait wait)
+        public void ClickSave()
         {
             driver.FindElement(By.Name("save")).Click();
             wait.Until(ExpectedConditions.TitleContains("Catalog"));
@@ -166,42 +171,42 @@ namespace SeleniumTasksProject1.Pages
             new SelectElement(driver.FindElement(By.Name("default_category_id"))).SelectByValue(category);
         }*/
 
-        internal void SelectDefaultCategory(IWebDriver driver, string category)
+        internal void SelectDefaultCategory(string category)
         {
             new SelectElement(driver.FindElement(By.Name("default_category_id"))).SelectByText(category);
         }
 
-        internal void SelectQuantityUnit(IWebDriver driver, string quanityUnit)
+        internal void SelectQuantityUnit(string quanityUnit)
         {
             new SelectElement(driver.FindElement(By.Name("quantity_unit_id"))).SelectByText(quanityUnit);
         }
 
-        internal void SelectDeliveryStatus(IWebDriver driver, string deliveryStatus)
+        internal void SelectDeliveryStatus(string deliveryStatus)
         {
             new SelectElement(driver.FindElement(By.Name("delivery_status_id"))).SelectByText(deliveryStatus);
         }
 
-        internal void SelectSoldOutStatus(IWebDriver driver, string soldOutStatus)
+        internal void SelectSoldOutStatus(string soldOutStatus)
         {
             new SelectElement(driver.FindElement(By.Name("sold_out_status_id"))).SelectByText(soldOutStatus);
         }
 
-        internal void SelectManufacturer(IWebDriver driver, string manufacturer)
+        internal void SelectManufacturer(string manufacturer)
         {
             new SelectElement(driver.FindElement(By.Name("manufacturer_id"))).SelectByText(manufacturer);
         }
 
-        internal void SelectSupplier(IWebDriver driver, string supplier)
+        internal void SelectSupplier(string supplier)
         {
             new SelectElement(driver.FindElement(By.Name("supplier_id"))).SelectByText(supplier);
         }
 
-        internal void SelectTaxClass(IWebDriver driver, string taxClass)
+        internal void SelectTaxClass(string taxClass)
         {
             new SelectElement(driver.FindElement(By.Name("tax_class_id"))).SelectByText(taxClass);
         }
 
-        public void SetDatepicker(IWebDriver driver, string cssSelector, string date)
+        public void SetDatepicker(string cssSelector, string date)
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until<bool>(
                 d => driver.FindElement(By.CssSelector(cssSelector)).Displayed);
@@ -209,7 +214,7 @@ namespace SeleniumTasksProject1.Pages
                 String.Format("$('{0}').datepicker('setDate', '{1}')", cssSelector, date));
         }
 
-        public void unhide(IWebDriver driver, IWebElement element)
+        public void unhide(IWebElement element)
         {
             String script = "arguments[0].style.opacity=1;"
               + "arguments[0].style['transform']='translate(0px, 0px) scale(1)';"
@@ -221,10 +226,10 @@ namespace SeleniumTasksProject1.Pages
             ((IJavaScriptExecutor)driver).ExecuteScript(script, element);
         }
 
-        public void UploadImage(IWebDriver driver, By locator, String file)
+        public void UploadImage(By locator, String file)
         {
             IWebElement input = driver.FindElement(locator);
-            unhide(driver, input);
+            unhide(input);
             input.SendKeys(file);
         }
     }

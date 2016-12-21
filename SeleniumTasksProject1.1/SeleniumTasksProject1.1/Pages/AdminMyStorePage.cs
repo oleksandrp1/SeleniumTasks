@@ -13,7 +13,16 @@ namespace SeleniumTasksProject1.Pages
 {
     public class AdminMyStorePage
     {
-        public void OpenAllElements(IWebDriver driver, WebDriverWait wait)
+        private IWebDriver driver;
+        private WebDriverWait wait;
+
+        public AdminMyStorePage(IWebDriver driver1, WebDriverWait wait1)
+        {
+            driver = driver1;
+            wait = wait1;
+        }
+
+        public void OpenAllElements()
         {
             string titleOfMainMenu = null;
             string titleOfSubMenu = null;
@@ -43,7 +52,7 @@ namespace SeleniumTasksProject1.Pages
             }
         }
 
-        public void GoToSection(IWebDriver driver, string section, WebDriverWait wait = null)
+        public void GoToSection(string section)
         {
             IList<IWebElement> sections = driver.FindElements(By.ClassName("name"));
             for (int i=0; i<sections.Count; i++)
@@ -57,7 +66,7 @@ namespace SeleniumTasksProject1.Pages
             }
         }
 
-        public void Logout(IWebDriver driver, WebDriverWait wait)
+        public void Logout()
         {
             driver.FindElement(By.CssSelector("a[title='Logout']")).Click();
             wait.Until(ExpectedConditions.TitleIs("My Store"));
